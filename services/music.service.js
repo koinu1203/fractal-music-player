@@ -3,22 +3,30 @@ require('@nuxtjs/dotenv');
 const http = require('axios').default;
 
 export class MusicService{
-  constructor(token){
+  constructor(apiConfig,token){
     this.token=token;
+    this.apiConfig=apiConfig;
+    this.axiosConfig = {
+      crossdomain:true
+    }
   }
   
   async getTrackMusic(name){
-    return http.get(`${process.env.PROXY}${API_URL}/search/track?q=${name}`,{headers:{
-      'response_type': this.token
-    }});
+    return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/search/track?q=${name}`,this.axiosConfig);
+  }
+  async getAlbumMusic(name){
+    return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/search/album?q=${name}`,this.axiosConfig);
   }
   getRandomMusic(){
     return this.getTrackMusic('a');
   };
-  async getArtistInfoById(id){
-    return http.get(`${process.env.PROXY}${API_URL}/artist/${id}`,{headers:{
-      'response_type': this.token
-    }});
+  getRandomAlbums(){
+    return this.getAlbumMusic('a');
   };
-
+  async getArtistInfoById(id){
+    return http.get(`${this.apiConfig.PROXY??''}${API_URL}/artist/${id}`,this.axiosConfig);
+  };
+  async getAlbumById(id){
+    return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/album/${id}`,this.axiosConfig);
+  }
 }

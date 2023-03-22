@@ -23,4 +23,7 @@
       color: lighten(color('red'),0.8);
     }
   }
+  @include mobile{
+    min-width: 90px;
+  }
 }

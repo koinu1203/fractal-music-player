@@ -13,6 +13,7 @@
 </template>
 
 <style lang="scss">
+@import "../assets/scss/breakpoints";
 .mp-results-containe{
   
   margin-top: 80px;
@@ -25,6 +26,13 @@
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 25px;
+  }
+  @include mobile{
+    margin-top: 30px;
+    .cover-separator{
+      padding-right: 0px;
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

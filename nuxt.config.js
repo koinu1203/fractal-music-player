@@ -4,7 +4,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'fractal-music-player',
+    title: 'Foxbel Music',
     htmlAttrs: {
       lang: 'es',
     },
@@ -14,17 +14,28 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-    script:[
-      { src: '/js/oauth.js' }
-    ]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/scss/main.scss','@fortawesome/fontawesome-svg-core/styles.css'],
+  css: ['~/assets/scss/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/fontawesome.js'],
-
+  dev: process.env.NODE_ENV !== 'production',
+  env: {
+    apiDev: {
+      APP_ID : '591104',
+      SECRET_KEY:'91919756ed763700109c8954cebf9374',
+      BASE_URL:'http://localhost:3000/',
+      PROXY:'https://cors-anywhere.herokuapp.com/'
+    },
+    apiProd:{
+      APP_ID : '590364',
+      SECRET_KEY:'2539f691a47b796b6e0f9fe8be1006aa',
+      BASE_URL:'https://foxbel-music-app.web.app',
+      PROXY:'https://cors-anywhere.herokuapp.com/'
+    }
+  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
@@ -42,7 +53,7 @@ export default {
   },
   routes: { '/': { prerender: true }, '/*': { cors: true } },
   proxy:{
-    "/":"http://localhost:3000/"
+    "/": process.env.baseURL
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {

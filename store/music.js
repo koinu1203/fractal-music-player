@@ -1,4 +1,6 @@
 import { MusicService } from "~/services/music.service";
+const configEnv = require('../nuxt.config.js').default;
+const apiConfig = configEnv.dev? configEnv.env.apiDev: configEnv.env.apiProd;
 
 export const state = () => ({
   currentSong: {},
@@ -50,18 +52,19 @@ export const mutations = {
 
 export const actions = {
   async setHeroArtist({rootGetters,commit}){
-    const musicService = new MusicService(rootGetters['auth/getAccessToken']);
+    const musicService = new MusicService(apiConfig,rootGetters['auth/getAccessToken']);
     musicService.getArtistInfoById(rootGetters['music/getHeroSong'].artist?.id).then((val)=>{
       commit('updateHeroArtist',val.data);
     })
   },
   async findSongsByTitle({rootGetters,commit},title){
-    const musicService = new MusicService(rootGetters['auth/getAccessToken']);
+    
+    const musicService = new MusicService(apiConfig,rootGetters['auth/getAccessToken']);
     musicService.getTrackMusic(title)
     .then(element => element.data)
     .then((val)=>{
       commit('updateSongList',val.data);
       commit('updateHeroSong',val.data[0]);
-    })
+    });
   }
  }

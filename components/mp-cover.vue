@@ -9,7 +9,7 @@
       >
       <font-awesome-icon
         :icon="['fas', 'play']"
-        style="color: white;"
+        style="color: white; width: 32px; height: 42px;"
         class="play-icon"
       />
       <font-awesome-icon
@@ -39,9 +39,8 @@
     max-height: 160px;
     .play-icon {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: scale(3);
+      top: 38%;
+      left: 39%;
     }
     .ellipsis-vertical-icon{
       position: absolute;

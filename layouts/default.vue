@@ -1,9 +1,3 @@
-
-import MpPlayer from '~/components/mp-player.vue';
-
-
-import LeftAsideBar from '~/components/left-aside-bar.vue';
-
 <template>
   <div class="page">
     <LeftAsideBar/>
@@ -15,3 +9,13 @@ import LeftAsideBar from '~/components/left-aside-bar.vue';
   </div>
 
 </template>
+<script lang="js">
+import LeftAsideBar from '~/components/left-aside-bar.vue';
+import MpHeader from '~/components/mp-header.vue';
+import MpPlayer from '~/components/mp-player.vue';
+
+export default{
+  components: { MpHeader, LeftAsideBar, MpPlayer }
+}
+
+</script>

@@ -9,7 +9,7 @@ $xl: 1200px;
   }
 }
 @mixin all-mobile {
-  @media (max-width: 768px) {
+  @media (max-width: 991px) {
     @content;
   }
 }

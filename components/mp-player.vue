@@ -17,23 +17,26 @@
         <font-awesome-icon
           :icon="['fas', 'backward-step']"
           class="icon-player"
+          style="color: white; width: 21px; height: 21px;"
         />
       </div>
       <div class="play-icon apr-3 d-flex justify-content-center" @click="togglePlay">
         <font-awesome-icon
           :icon="['fas', playerIcon]"
           class="icon-player "
+          style="color: white; width: 16px; height: 21px;"
         />
       </div>
       <div class="forward-step-icon apr-3 d-flex justify-content-center">
         <font-awesome-icon
           :icon="['fas', 'forward-step']"
           class="icon-player"
+          style="color: white; width: 21px; height: 21px;"
         />
       </div>
       <audio :src="this.song?.preview" preload="auto" id="musicPlayer" autoplay @play="onStartMusic" @ended="onEndedSong"></audio>
     </div>
-    <div class="opcions-player-container d-flex flex-row align-items-center pr-5">
+    <div class="opcions-player-container d-flex flex-row align-items-center pr-4">
       <input
         type="range"
         class="mr-5 volumen-range"
@@ -44,34 +47,54 @@
       <font-awesome-icon
         :icon="['fas', volumeIcon]"
         class="volumen-icon"
+        style="color: white; height: 42px;"
       />
     </div>
   </div>
 </template>
 <style lang="scss">
+@import "../assets/scss/breakpoints";
+
 .mp-player-container {
   transition: all 0.5s;
   position: fixed;
   bottom: 0px;
   width: 100%;
   height: 100px;
-  z-index: 4;
+  z-index: 20;
   background: #EB5757;
   &.hidden{
     transform: translateY(100px);
   }
   .music-data {
     justify-content: center;
+    overflow: hidden;
+    max-width: 400px;
+    label{
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        height: 20px;
+      }
   }
-
+  @include all-mobile{
+    .music-data{
+      max-width: 200px;
+    }
+  }
+  @include mobile{
+    .music-data{
+      margin-left: 8px !important;
+      overflow: hidden;
+      text-overflow: clip;
+      max-width: 120px;
+      
+    }
+  }
   .buttons-player-container {
     position: absolute;
-    left: 50%;
+    left: 48%;
     width: 172px;
-
-    svg {
-      transform: scale(1.5);
-    }
 
     .play-icon {
       width: 60px;
@@ -94,16 +117,38 @@
     .icon-player {
       align-self: center;
     }
+    @include all-mobile{
+      left: 45%;
+    }
+    @include mobile{
+      left: 57%;
+      justify-content: center !important;
+      .backward-step-icon{
+        display: none !important;
+      }
+      .play-icon{
+        margin-right: 20px;
+      }
+    }
   }
-
   .opcions-player-container {
     height: 100%;
     .volumen-range{
       position: absolute;
       right: 50px;
     }
-    .volumen-icon {
-      transform: scale(2);
+    @include all-mobile{
+      .volumen-icon{
+        height: 20px !important;
+      }
+      .volumen-range{
+        width: 60px;
+        right: 20px;
+
+      }
+    }
+    @include mobile{
+      display: none !important;
     }
   }
 }</style>

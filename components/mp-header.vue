@@ -2,7 +2,7 @@
   <div class="mp-header-container d-flex justify-content-between align-items-center mx-2">
     <div class="mp-search-container d-flex justify-content-between align-items-center col-12">
       <input type="text" placeholder="Buscar" @keyup="$event=>onSearchTitle($event.target.value)" class="col-12 px-0">
-      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="c-gray mp-icon-search" />
+      <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="c-gray mp-icon-search" style="width: 18px; height: 18px;" />
     </div>
     <div class="mp-login d-flex justify-content-center align-items-center">
       <font-awesome-icon :icon="['fas', 'user']" class="c-red mr-2 mp-icon-user"/>
@@ -11,6 +11,7 @@
   </div>
 </template>
 <style lang="scss">
+@import "../assets/scss/breakpoints";
 .mp-header-container{
   width: 100%;
   .mp-search-container{
@@ -20,6 +21,8 @@
     height: fit-content;
     overflow: hidden;
     padding: 6px 35px 7px 16px;
+    max-width: 440px;
+
     input{
       border: none;
       outline: none;
@@ -29,7 +32,14 @@
       right: 16px;
       cursor: pointer;
     }
-    max-width: 524px;
+    @include all-mobile{
+      width: 20vw;
+      max-width: 300px;
+
+    }
+    @include mobile{
+      max-width: 200px;
+    }
   }
   .mp-login{
     .mp-icon-user{

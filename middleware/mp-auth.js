@@ -1,8 +1,7 @@
-import { PUBLIC_KEY } from '~/assets/constants';
 import { AuthService } from '~/services/auth.service';
-export default function ({ query, store }) {
-  
-  const authService = new AuthService();
+export default function ({ app:{$redirectToLogin},query, store,isDev,env }) {
+  const apiConfig = isDev? env.apiDev:env.apiProd;
+  const authService = new AuthService(apiConfig);
   const getUser = () => {
     authService.getUserByToken(store.state.auth.accessToken).then((val)=>{
       store.commit('user/replaceCurrentUser',val.data);
