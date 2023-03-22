@@ -1,12 +1,12 @@
 <template>
-  <div class="mp-header-container d-flex justify-content-between align-items-center">
+  <div class="mp-header-container d-flex justify-content-between align-items-center mx-2">
     <div class="mp-search-container d-flex justify-content-between align-items-center col-12">
       <input type="text" placeholder="Buscar" class="col-12 px-0">
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="c-gray mp-icon-search" />
     </div>
     <div class="mp-login d-flex justify-content-center align-items-center">
       <font-awesome-icon :icon="['fas', 'user']" class="c-red mr-2 mp-icon-user"/>
-      <span>Daniel Ortiz</span>
+      <span>{{ this.currentUser?.name }}</span>
     </div>
   </div>
 </template>
@@ -39,3 +39,15 @@
   }
 }
 </style>
+<script lang="js">
+import { mapGetters } from 'vuex'
+
+export default{
+  computed: {
+    ...mapGetters({
+      currentUser: 'user/getCurrentUser'
+    }),
+  }
+}
+
+</script>

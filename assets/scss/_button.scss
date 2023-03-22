@@ -1,0 +1,26 @@
+.mp-btn{
+  padding-top: 6px;
+  padding-bottom: 5px;
+  border-radius: 100px;
+  outline: none;
+  border: none;
+  min-width: 117px;
+  font-size: 14px;
+  &-primary{
+    background-color: color('red');
+    color: color('white');
+    &:hover,&:active{
+      background-color: rgba(color('red'),0.8);
+    }
+  }
+  &-line{
+    background-color: transparent;
+    border: 1px solid color('red');
+    color: color('red');
+    &:hover,&:active{
+      background-color: rgba(color('gray'), 0.1);
+      border-color: lighten(color('red'),0.8);
+      color: lighten(color('red'),0.8);
+    }
+  }
+}

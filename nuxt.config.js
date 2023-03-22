@@ -15,10 +15,10 @@ export default {
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    script:[
+      { src: '/js/oauth.js' }
+    ]
   },
-  script:[
-    { src: 'https://kit.fontawesome.com/7a9f777c24.js', crossorigin:'anonymous'}
-  ],
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['~/assets/scss/main.scss','@fortawesome/fontawesome-svg-core/styles.css'],
 
@@ -35,8 +35,21 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/dotenv'
   ],
-
+  axios:{
+    proxy:true
+  },
+  routes: { '/': { prerender: true }, '/*': { cors: true } },
+  proxy:{
+    "/":"http://localhost:3000/"
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend: function (config, {isDev, isClient}) {
+        config.node = {
+            fs: "empty"
+        };
+    }
+},
 }
