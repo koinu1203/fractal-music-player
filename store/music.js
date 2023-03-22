@@ -60,7 +60,7 @@ export const actions = {
   async findSongsByTitle({rootGetters,commit},title){
     
     const musicService = new MusicService(apiConfig,rootGetters['auth/getAccessToken']);
-    musicService.getTrackMusic(title)
+    musicService.getMusic(title)
     .then(element => element.data)
     .then((val)=>{
       commit('updateSongList',val.data);

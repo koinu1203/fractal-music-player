@@ -10,7 +10,9 @@ export class MusicService{
       crossdomain:true
     }
   }
-  
+  async getMusic(name){
+    return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/search?q=${name}`,this.axiosConfig);
+  }
   async getTrackMusic(name){
     return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/search/track?q=${name}`,this.axiosConfig);
   }
@@ -18,7 +20,7 @@ export class MusicService{
     return http.get(`${this.apiConfig.PROXY?? ''}${API_URL}/search/album?q=${name}`,this.axiosConfig);
   }
   getRandomMusic(){
-    return this.getTrackMusic('a');
+    return this.getMusic('a');
   };
   getRandomAlbums(){
     return this.getAlbumMusic('a');
