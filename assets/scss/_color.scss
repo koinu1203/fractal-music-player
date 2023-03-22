@@ -1,0 +1,23 @@
+$mp-colors: (
+  "red": #E86060,
+  "red-alter": #EB5757,
+  "red-light": #FF7676,
+  "red-dark": #662323,
+  "gray": #828282,
+  "gray-light": #BDBDBD,
+  "gray-dark": #555555,
+  "white": #FFFFFF,
+);
+
+@function color($colorName) {
+  @return map-get($mp-colors, $colorName);
+}
+
+@each $key, $hex in $mp-colors {
+  .c-#{$key} {
+    color: $hex;
+  }
+  .bg-#{$key} {
+    background-color: $hex;
+  }
+}
