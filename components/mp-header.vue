@@ -41,13 +41,24 @@
 </style>
 <script lang="js">
 import { mapGetters } from 'vuex'
+import { MusicService } from '~/services/music.service';
 
 export default{
   computed: {
     ...mapGetters({
       currentUser: 'user/getCurrentUser'
     }),
-  }
+  },
+  mounted() {
+      const musicService = new MusicService(this.$store.state.auth.accessToken);
+      musicService.getRandomMusic()
+      .then( el => el.data )
+      .then((val) => {
+        this.$store.commit('music/updateSongList',val.data);
+        this.$store.commit('music/updateHeroSong',val.data[0]);
+      });
+      console.log(this.$store.state);
+  },
 }
 
 </script>

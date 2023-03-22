@@ -6,10 +6,14 @@ export class MusicService{
   constructor(token){
     this.token=token;
   }
-  async getRandomMusic(){
-    return http.get(`${process.env.PROXY}${API_URL}/chart/0`,{headers:{
+  
+  async getTrackMusic(name){
+    return http.get(`${process.env.PROXY}${API_URL}/search/track?q=${name}`,{headers:{
       'response_type': this.token
     }});
+  }
+  getRandomMusic(){
+    return this.getTrackMusic('a');
   };
   async getArtistInfoById(id){
     return http.get(`${process.env.PROXY}${API_URL}/artist/${id}`,{headers:{

@@ -1,12 +1,16 @@
+import { MusicService } from "~/services/music.service";
+
 export const state = () => ({
   currentSong: {},
   heroSong: {},
-  listSongs: [],
+  heroArtist: {},
+  songList: [],
 });
 
 export const getters = {
   getHeroSong: state => state.heroSong,
-  getListSongs: state => state.listSongs,
+  getHeroArtist: state => state.heroArtist,
+  getSongList: state => state.songList,
   getCurrentSong: state => state.currentSong,
 }
 
@@ -17,17 +21,30 @@ export const mutations = {
   updateHeroSong(state, val) {
     state.heroSong = val;
   },
-  updateListSongs(state, val) {
-    state.listSongs = val;
+  updateHeroArtist(state, val) {
+    state.heroArtist = val;
+  },
+  updateSongList(state, val) {
+    state.songList = val;
     if (val) {
       this.commit('music/updateHeroSong', val[0]);
+      this.dispatch('music/setHeroArtist');
     }
   },
-  pushListSongs(state, val) {
-    state.listSongs.push(val);
+  pushSongList(state, val) {
+    state.songList.push(val);
   },
-  cleanListSongs(state, val) {
-    state.listSongs = [];
+  cleanSongList(state, val) {
+    state.songList = [];
   },
 
 }
+
+export const actions = {
+  async setHeroArtist({rootGetters,commit}){
+    const musicService = new MusicService(rootGetters['auth/getAccessToken']);
+    musicService.getArtistInfoById(rootGetters['music/getHeroSong'].artist?.id).then((val)=>{
+      commit('updateHeroArtist',val.data);
+    })
+  }
+ }

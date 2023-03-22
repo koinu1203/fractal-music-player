@@ -1,4 +1,7 @@
 
+import MpPlayer from '~/components/mp-player.vue';
+
+
 import LeftAsideBar from '~/components/left-aside-bar.vue';
 
 <template>
@@ -8,6 +11,7 @@ import LeftAsideBar from '~/components/left-aside-bar.vue';
       <MpHeader/>
       <Nuxt />
     </div>
+    <MpPlayer/>
   </div>
 
 </template>
