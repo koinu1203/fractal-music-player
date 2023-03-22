@@ -2,7 +2,7 @@
   <div class="mp-results-containe px-0">
     <label class="mp-h4-700 c-red mx-2">Resultados</label>
     <div class="d-flex flex-row justify-content-start flex-wrap mp-results-coverts">
-      <div class="cover-separator" v-for="song in this.songList">
+      <div class="cover-separator" v-for="song in this.songList" @click="onClickCover(song)">
         <MpCover :img-cover="song.album.cover_medium" :title-cover="song.title" :artist-cover="song.artist.name"/>
       </div>
       <div v-if="!this.songList">
@@ -40,8 +40,10 @@ export default{
       songList: 'music/getSongList'
     }),
   },
-  mounted(){
-    console.log(this.$store.state.music);
-  }
+  methods:{
+    onClickCover: function(song){
+      this.$store.commit('music/updateCurrentSong', song);
+    }
+  },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="mp-header-container d-flex justify-content-between align-items-center mx-2">
     <div class="mp-search-container d-flex justify-content-between align-items-center col-12">
-      <input type="text" placeholder="Buscar" class="col-12 px-0">
+      <input type="text" placeholder="Buscar" @keyup="$event=>onSearchTitle($event.target.value)" class="col-12 px-0">
       <font-awesome-icon :icon="['fas', 'magnifying-glass']" class="c-gray mp-icon-search" />
     </div>
     <div class="mp-login d-flex justify-content-center align-items-center">
@@ -40,8 +40,7 @@
 }
 </style>
 <script lang="js">
-import { mapGetters } from 'vuex'
-import { MusicService } from '~/services/music.service';
+import { mapGetters } from 'vuex';
 
 export default{
   computed: {
@@ -49,15 +48,17 @@ export default{
       currentUser: 'user/getCurrentUser'
     }),
   },
+  methods:{
+    onSearchTitle(event){
+      if(event.length>0){
+        this.$store.dispatch('music/findSongsByTitle',event);
+      }else{
+        this.$store.dispatch('music/findSongsByTitle','a');
+      }
+    }
+  },
   mounted() {
-      const musicService = new MusicService(this.$store.state.auth.accessToken);
-      musicService.getRandomMusic()
-      .then( el => el.data )
-      .then((val) => {
-        this.$store.commit('music/updateSongList',val.data);
-        this.$store.commit('music/updateHeroSong',val.data[0]);
-      });
-      console.log(this.$store.state);
+    this.$store.dispatch('music/findSongsByTitle','a');
   },
 }
 

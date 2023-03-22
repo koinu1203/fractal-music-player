@@ -1,15 +1,15 @@
 <template>
-  <div class="mp-player-container d-flex flex-row align-items-center justify-content-between c-white" :class="{'hidden':true}">
+  <div class="mp-player-container d-flex flex-row align-items-center justify-content-between c-white" :class="{'hidden':!this.show}">
     <div class="music-info-container d-flex flex-row align-items-center justify-content-start">
       <img
-        src="https://e-cdns-images.dzcdn.net/images/artist/55b503a64bfd5262675a2a87730df068/250x250-000000-80-0-0.jpg"
+        :src="this.song?.album?.cover_medium"
         width="100"
         height="100"
         alt="current song image"
       >
       <div class="music-data d-flex flex-column  ml-3">
-        <label class="mb-2 mp-h6-700">Canción</label>
-        <span class="mp-h7-700">Artista - Álbum</span>
+        <label class="mb-2 mp-h6-700">{{ this.song?.title }}</label>
+        <span class="mp-h7-700">{{ this.song?.artist?.name }} - {{ this.song?.album?.title }}</span>
       </div>
     </div>
     <div class="buttons-player-container d-flex flex-row align-items-center justify-content-between">
@@ -19,9 +19,9 @@
           class="icon-player"
         />
       </div>
-      <div class="play-icon apr-3 d-flex justify-content-center">
+      <div class="play-icon apr-3 d-flex justify-content-center" @click="togglePlay">
         <font-awesome-icon
-          :icon="['fas', 'play']"
+          :icon="['fas', playerIcon]"
           class="icon-player "
         />
       </div>
@@ -31,14 +31,18 @@
           class="icon-player"
         />
       </div>
+      <audio :src="this.song?.preview" preload="auto" id="musicPlayer" autoplay @play="onStartMusic" @ended="onEndedSong"></audio>
     </div>
     <div class="opcions-player-container d-flex flex-row align-items-center pr-5">
       <input
         type="range"
         class="mr-5 volumen-range"
+        min="0"
+        max="100"
+        @change="$event => setVolumen($event.target.value)"
       >
       <font-awesome-icon
-        :icon="['fas', 'volume-off']"
+        :icon="['fas', volumeIcon]"
         class="volumen-icon"
       />
     </div>
@@ -61,6 +65,8 @@
   }
 
   .buttons-player-container {
+    position: absolute;
+    left: 50%;
     width: 172px;
 
     svg {
@@ -92,8 +98,64 @@
 
   .opcions-player-container {
     height: 100%;
+    .volumen-range{
+      position: absolute;
+      right: 50px;
+    }
     .volumen-icon {
       transform: scale(2);
     }
   }
 }</style>
+<script lang="js">
+import { mapGetters } from 'vuex'
+
+export default{
+  computed: {
+    ...mapGetters({
+      song: 'music/getCurrentSong',
+      show: 'music/getHasCurrentSong'
+    }),
+  },
+  data(){
+    return {
+      playerIcon:'pause',
+      volumeIcon:'volume-low'
+    }
+  },
+  methods:{
+    togglePlay(){
+      const musicPlayer = document.getElementById('musicPlayer');
+      if(musicPlayer.paused){
+        musicPlayer.play();
+        this.playerIcon='pause';
+      }else{
+        musicPlayer.pause();
+        this.playerIcon='play';
+      }
+    },
+    setVolumen(event){
+      document.getElementById('musicPlayer').volume = event/100;
+      if(event>50){
+        this.volumeIcon = 'volume-high';
+      }else if(event>25){
+        this.volumeIcon = 'volume-low';
+      }else if(event>0){
+        this.volumeIcon = 'volume-off';
+      }else{
+        this.volumeIcon = 'volume-xmark';
+      }
+    },
+    onEndedSong(event){
+      this.playerIcon='play';
+    },
+    onStartMusic(event){
+      this.playerIcon='pause';
+    }
+  },
+  mounted(){
+    const musicPlayer = document.getElementById('musicPlayer');
+    musicPlayer.volume = 0.5;
+  }
+}
+</script>

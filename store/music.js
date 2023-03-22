@@ -2,6 +2,7 @@ import { MusicService } from "~/services/music.service";
 
 export const state = () => ({
   currentSong: {},
+  hasCurrentSong: false,
   heroSong: {},
   heroArtist: {},
   songList: [],
@@ -12,11 +13,18 @@ export const getters = {
   getHeroArtist: state => state.heroArtist,
   getSongList: state => state.songList,
   getCurrentSong: state => state.currentSong,
+  getHasCurrentSong: state => state.hasCurrentSong,
 }
 
 export const mutations = {
   updateCurrentSong(state, val) {
-    state.currentSong = val;
+    state.currentSong = {...val};
+    if(Object.keys(val).length>0){
+      this.commit('music/updateHasCurrentSong',true);
+    }
+  },
+  updateHasCurrentSong(state, val) {
+    state.hasCurrentSong = val;
   },
   updateHeroSong(state, val) {
     state.heroSong = val;
@@ -45,6 +53,15 @@ export const actions = {
     const musicService = new MusicService(rootGetters['auth/getAccessToken']);
     musicService.getArtistInfoById(rootGetters['music/getHeroSong'].artist?.id).then((val)=>{
       commit('updateHeroArtist',val.data);
+    })
+  },
+  async findSongsByTitle({rootGetters,commit},title){
+    const musicService = new MusicService(rootGetters['auth/getAccessToken']);
+    musicService.getTrackMusic(title)
+    .then(element => element.data)
+    .then((val)=>{
+      commit('updateSongList',val.data);
+      commit('updateHeroSong',val.data[0]);
     })
   }
  }
