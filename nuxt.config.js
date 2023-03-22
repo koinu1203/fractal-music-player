@@ -27,13 +27,13 @@ export default {
       APP_ID : '591104',
       SECRET_KEY:'91919756ed763700109c8954cebf9374',
       BASE_URL:'http://localhost:3000/',
-      PROXY:'https://cors-anywhere.herokuapp.com/'
+      PROXY:'https://glacial-lowlands-33860.herokuapp.com/'
     },
     apiProd:{
       APP_ID : '590364',
       SECRET_KEY:'2539f691a47b796b6e0f9fe8be1006aa',
       BASE_URL:'https://foxbel-music-app.web.app',
-      PROXY:'https://cors-anywhere.herokuapp.com/'
+      PROXY:'https://glacial-lowlands-33860.herokuapp.com/'
     }
   },
   // Auto import components: https://go.nuxtjs.dev/config-components
